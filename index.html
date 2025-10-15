@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kira Detik Peperiksaan Utama</title>
+    <!-- Muat Naik Tailwind CSS CDN untuk Styling Responsif -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Muat Naik Font Inter -->
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            /* TEMA KELABU: Latar belakang Kelabu Gelap */
+            background-color: #1e2126; 
+            color: #e5e7eb; /* Teks default putih lembut */
+            /* Menambah corak latar belakang lembut */
+            background-image: radial-gradient(#374151 1px, transparent 1px);
+            background-size: 30px 30px;
+        }
+        /* Custom styling for card glow/shadow */
+        .countdown-card {
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+            /* TEMA KELABU: Latar belakang kad Kelabu yang sedikit berbeza */
+            background-color: #374151; 
+        }
+        .countdown-card:hover {
+            transform: translateY(-8px);
+            /* TEMA KUNING: Bayangan neon Kuning */
+            box-shadow: 0 25px 50px -12px rgba(253, 224, 71, 0.7), 0 10px 10px -5px rgba(253, 224, 71, 0.3);
+        }
+        /* Style untuk Unit Masa */
+        .time-unit {
+            /* TEMA KELABU: Latar belakang unit masa yang lebih cerah untuk kontras yang jelas */
+            background-color: #4b5563; 
+            color: #f3f4f6;
+            transition: background-color 0.3s ease;
+        }
+        .time-unit p:first-child {
+            /* Warna nombor lebih menonjol */
+            font-feature-settings: 'tnum'; /* Font tabular numbers untuk kira detik sekata */
+        }
+    </style>
+</head>
+<body class="p-4 md:p-8 min-h-screen flex items-start justify-center">
+
+    <div class="w-full max-w-7xl">
+        <!-- Header Utama -->
+        <header class="text-center mb-12">
+            <!-- Logo Ditambah -->
+            <img src="Logo KPM PPD AG Black.png" alt="Logo PPD Alor Gajah" class="mx-auto h-32 mb-6">
+            <!-- TEMA KUNING: Nama PPD dalam Kuning -->
+            <p class="text-2xl md:text-3xl font-semibold text-yellow-400 mb-1">PEJABAT PENDIDIKAN DAERAH ALOR GAJAH</p>
+            <h1 class="text-5xl md:text-6xl font-extrabold text-white mb-2 leading-tight">
+                KIRA DETIK
+                <!-- TEMA KUNING: Tajuk utama menggunakan Kuning/Jingga terang -->
+                <span class="block text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 to-yellow-500">
+                    PEPERIKSAAN UTAMA
+                </span>
+            </h1>
+            <!-- Paparan Tarikh Semasa Ditambah -->
+            <p id="current-date" class="text-lg text-gray-300 mb-4"></p>
+        </header>
+
+        <!-- Container Utama Peperiksaan -->
+        <div class="space-y-16">
+
+            <!-- Seksyen SPM -->
+            <div>
+                <h2 class="text-3xl font-bold text-center mb-6 text-yellow-400 border-b-2 border-yellow-600 pb-3">SIJIL PELAJARAN MALAYSIA (SPM)</h2>
+                <div id="spm-countdown-container" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
+                    <!-- Kad Kira Detik SPM akan dimasukkan di sini -->
+                </div>
+            </div>
+
+            <!-- Seksyen STAM -->
+            <div>
+                <h2 class="text-3xl font-bold text-center mb-6 text-yellow-400 border-b-2 border-yellow-600 pb-3">SIJIL TINGGI AGAMA MALAYSIA (STAM)</h2>
+                <div id="stam-countdown-container" class="grid grid-cols-1 gap-6 max-w-sm mx-auto">
+                    <!-- Kad Kira Detik STAM akan dimasukkan di sini -->
+                </div>
+            </div>
+
+            <!-- Seksyen STPM -->
+            <div>
+                <h2 class="text-3xl font-bold text-center mb-6 text-yellow-400 border-b-2 border-yellow-600 pb-3">SIJIL TINGGI PERSEKOLAHAN MALAYSIA (STPM)</h2>
+                <div id="stpm-countdown-container" class="grid grid-cols-1 gap-6 max-w-sm mx-auto">
+                    <!-- Kad Kira Detik STPM akan dimasukkan di sini -->
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Pesanan Status/Kaki -->
+        <footer class="text-center mt-16 p-8 bg-gray-900/50 backdrop-blur-sm rounded-3xl border border-yellow-700 shadow-2xl">
+            <!-- Mutiara Kata Dinamik Ditambah -->
+            <h3 class="text-sm font-bold uppercase text-gray-300 mb-3">MOTIVASI HARI INI</h3>
+            <!-- TEMA KUNING: Mutiara kata dalam Kuning -->
+            <p id="mutiara-kata" class="text-xl italic font-medium text-yellow-400 transition duration-500 ease-in-out">
+                <!-- Mutiara kata akan dimuatkan di sini oleh JavaScript -->
+                Memuatkan inspirasi...
+            </p>
+            <hr class="border-gray-700 my-6">
+            <p class="text-xs text-gray-500">Masa dikira berdasarkan zon waktu Malaysia (GMT+8). Semua ujian bermula jam 8:00 pagi.</p>
+        </footer>
+    </div>
+
+    <script>
+        const spmContainer = document.getElementById('spm-countdown-container');
+        const stamContainer = document.getElementById('stam-countdown-container');
+        const stpmContainer = document.getElementById('stpm-countdown-container');
+        const quoteElement = document.getElementById('mutiara-kata');
+        const dateElement = document.getElementById('current-date');
+
+        // Data ujian.
+        const spmExamDates = [
+            { id: 'bm-lisan', name: 'Ujian Lisan Bertutur BM', date: new Date('November 3, 2025 08:00:00 GMT+0800') },
+            { id: 'bi-lisan', name: 'Ujian Lisan Bertutur BI', date: new Date('November 10, 2025 08:00:00 GMT+0800') },
+            { id: 'sains-amali', name: 'Ujian Amali Sains', date: new Date('November 17, 2025 08:00:00 GMT+0800') },
+            { id: 'mendengar', name: 'Ujian Lisan Mendengar', date: new Date('November 20, 2025 08:00:00 GMT+0800') },
+            { id: 'bm-bertulis', name: 'Bahasa Melayu (Bertulis)', date: new Date('November 25, 2025 08:00:00 GMT+0800') },
+            { id: 'bi-bertulis', name: 'Bahasa Inggeris (Bertulis)', date: new Date('November 26, 2025 08:00:00 GMT+0800') },
+            { id: 'sejarah', name: 'Sejarah', date: new Date('November 27, 2025 08:00:00 GMT+0800') },
+            { id: 'matematik', name: 'Matematik Moden', date: new Date('December 1, 2025 08:00:00 GMT+0800') },
+            { id: 'pendidikan-islam', name: 'Pendidikan Islam / Moral', date: new Date('December 2, 2025 08:00:00 GMT+0800') },
+            { id: 'sains', name: 'Sains / Fizik', date: new Date('December 4, 2025 08:00:00 GMT+0800') },
+        ];
+        const stamExamDates = [{ id: 'stam', name: 'STAM 2025', date: new Date('November 12, 2025 08:00:00 GMT+0800') }];
+        const stpmExamDates = [{ id: 'stpm', name: 'STPM 2025', date: new Date('January 13, 2026 08:00:00 GMT+0800') }];
+
+        const mutiaraKataList = [
+            "Kejayaan bukan kunci kepada kebahagiaan. Kebahagiaan adalah kunci kepada kejayaan. Jika anda suka dengan apa yang anda lakukan, anda akan berjaya.", "Jangan kira berapa lama masa yang anda ada, tetapi kira bagaimana anda menggunakan masa yang ada itu.", "Usaha yang keras hari ini adalah jaminan untuk keselesaan hari esok.", "Kecemerlangan adalah hasil daripada sikap, bukan kebetulan.", "Fokuskan tenaga anda, bukan kepada kekecewaan masa lalu, tetapi kepada kekuatan dan tindakan untuk hari ini.", "Anda tidak perlu menjadi hebat untuk memulakannya, tetapi anda perlu bermula untuk menjadi hebat.", "Setiap saat anda merasa ingin mengalah, ingat mengapa anda bermula.", "Percayalah kepada diri sendiri. Anda tahu lebih banyak daripada yang anda fikirkan.", "Cabaran terbesar adalah melawan diri sendiri. Jika anda dapat mengatasi rasa malas dan takut, KEJAYAAN akan jadi milik anda.", "Perjalanan seribu batu bermula dengan satu langkah. Mulakanlah hari ini!", "SPM hanyalah permulaan, bukan penamat. Gunakanlah ia sebagai jambatan ke masa depan yang lebih cerah.", "Tamat sahaja peperiksaan, dunia yang lebih besar menanti. Berikan yang terbaik sekarang agar pilihan anda lebih luas kelak.", "Kejayaan adalah jumlah usaha kecil, yang diulang hari demi hari.", "Jangan biarkan apa yang anda tidak boleh lakukan mengganggu apa yang anda boleh lakukan.", "Masa depan anda dicipta oleh apa yang anda lakukan hari ini, bukan esok.", "Disiplin adalah jambatan antara matlamat dan pencapaian."
+        ];
+        
+        function displayCurrentDate() {
+            const now = new Date();
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            dateElement.textContent = now.toLocaleDateString('ms-MY', options);
+        }
+
+        function displayRandomQuote() {
+            const randomIndex = Math.floor(Math.random() * mutiaraKataList.length);
+            quoteElement.textContent = mutiaraKataList[randomIndex];
+        }
+
+        function populateCountdown(exams, container) {
+            exams.sort((a, b) => a.date - b.date); // Sort exams by date
+            const now = new Date().getTime();
+            exams.forEach(exam => {
+                const targetTime = exam.date.getTime();
+                let timeRemaining = targetTime - now;
+                let cardElement = document.getElementById(`card-${exam.id}`);
+                if (!cardElement) {
+                    cardElement = createCountdownCard(exam);
+                    container.appendChild(cardElement);
+                }
+                if (timeRemaining < 0) {
+                    cardElement.innerHTML = `
+                        <p class="text-sm font-semibold uppercase text-yellow-400 mb-1">${exam.name}</p>
+                        <h3 class="text-xl font-bold mb-4 text-gray-300">${exam.date.toLocaleDateString('ms-MY', { day: 'numeric', month: 'long', year: 'numeric' })}</h3>
+                        <div class="text-center p-4 bg-gray-700 rounded-xl">
+                            <p class="text-2xl font-extrabold text-yellow-400">UJIAN SELESAI!</p>
+                        </div>`;
+                } else {
+                    const days = Math.floor(timeRemaining / 86400000);
+                    timeRemaining %= 86400000;
+                    const hours = Math.floor(timeRemaining / 3600000);
+                    timeRemaining %= 3600000;
+                    const minutes = Math.floor(timeRemaining / 60000);
+                    timeRemaining %= 60000;
+                    const seconds = Math.floor(timeRemaining / 1000);
+                    cardElement.innerHTML = `
+                        <p class="text-sm font-semibold uppercase text-yellow-400 mb-1">${exam.name}</p>
+                        <h3 class="text-xl font-bold mb-4 text-gray-300">${exam.date.toLocaleDateString('ms-MY', { day: 'numeric', month: 'long', year: 'numeric' })}</h3>
+                        <div class="flex justify-between space-x-1 sm:space-x-2 text-center time-display">
+                            ${createTimeUnit(days, 'Hari')}
+                            ${createTimeUnit(hours, 'Jam')}
+                            ${createTimeUnit(minutes, 'Minit')}
+                            ${createTimeUnit(seconds, 'Saat')}
+                        </div>`;
+                }
+            });
+        }
+        
+        function updateAllCountdowns() {
+            populateCountdown(spmExamDates, spmContainer);
+            populateCountdown(stamExamDates, stamContainer);
+            populateCountdown(stpmExamDates, stpmContainer);
+        }
+
+        function createCountdownCard(exam) {
+            const card = document.createElement('div');
+            card.id = `card-${exam.id}`;
+            card.className = `countdown-card p-4 rounded-2xl shadow-xl border-t-8 border-yellow-500`;
+            return card;
+        }
+
+        function createTimeUnit(value, label) {
+            return `
+                <div class="flex-1 time-unit p-2 rounded-xl shadow-lg border border-gray-600">
+                    <p class="text-xl sm:text-2xl font-extrabold text-yellow-400 leading-none">${String(value).padStart(2, '0')}</p>
+                    <p class="text-xs font-medium uppercase mt-1 text-gray-400">${label}</p>
+                </div>`;
+        }
+        
+        // Initial setup on page load
+        displayCurrentDate();
+        displayRandomQuote();
+        updateAllCountdowns();
+        setInterval(updateAllCountdowns, 1000);
+
+    </script>
+</body>
+</html>
+
