@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kira Detik Peperiksaan Utama</title>
-    <!-- Muat Naik Tailwind CSS CDN untuk Styling Responsif -->
+    
+    <link rel="icon" href="logo-kpm.png" type="image/png"/>
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Muat Naik Font Inter -->
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
         body {
@@ -45,59 +45,43 @@
 <body class="p-4 md:p-8 min-h-screen flex items-start justify-center">
 
     <div class="w-full max-w-7xl">
-        <!-- Header Utama -->
         <header class="text-center mb-12">
-            <!-- Logo Ditambah -->
             <img src="Logo KPM PPD AG Black.png" alt="Logo PPD Alor Gajah" class="mx-auto h-32 mb-6">
-            <!-- TEMA KUNING: Nama PPD dalam Kuning -->
             <p class="text-2xl md:text-3xl font-semibold text-yellow-400 mb-1">PEJABAT PENDIDIKAN DAERAH ALOR GAJAH</p>
             <h1 class="text-5xl md:text-6xl font-extrabold text-white mb-2 leading-tight">
                 KIRA DETIK
-                <!-- TEMA KUNING: Tajuk utama menggunakan Kuning/Jingga terang -->
                 <span class="block text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 to-yellow-500">
                     PEPERIKSAAN UTAMA
                 </span>
             </h1>
-            <!-- Paparan Tarikh Semasa Ditambah -->
             <p id="current-date" class="text-lg text-gray-300 mb-4"></p>
         </header>
 
-        <!-- Container Utama Peperiksaan -->
         <div class="space-y-16">
 
-            <!-- Seksyen SPM -->
             <div>
                 <h2 class="text-3xl font-bold text-center mb-6 text-yellow-400 border-b-2 border-yellow-600 pb-3">SIJIL PELAJARAN MALAYSIA (SPM)</h2>
                 <div id="spm-countdown-container" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
-                    <!-- Kad Kira Detik SPM akan dimasukkan di sini -->
-                </div>
+                    </div>
             </div>
 
-            <!-- Seksyen STAM -->
             <div>
                 <h2 class="text-3xl font-bold text-center mb-6 text-yellow-400 border-b-2 border-yellow-600 pb-3">SIJIL TINGGI AGAMA MALAYSIA (STAM)</h2>
                 <div id="stam-countdown-container" class="grid grid-cols-1 gap-6 max-w-sm mx-auto">
-                    <!-- Kad Kira Detik STAM akan dimasukkan di sini -->
-                </div>
+                    </div>
             </div>
 
-            <!-- Seksyen STPM -->
             <div>
                 <h2 class="text-3xl font-bold text-center mb-6 text-yellow-400 border-b-2 border-yellow-600 pb-3">SIJIL TINGGI PERSEKOLAHAN MALAYSIA (STPM)</h2>
                 <div id="stpm-countdown-container" class="grid grid-cols-1 gap-6 max-w-sm mx-auto">
-                    <!-- Kad Kira Detik STPM akan dimasukkan di sini -->
-                </div>
+                    </div>
             </div>
 
         </div>
 
-        <!-- Pesanan Status/Kaki -->
         <footer class="text-center mt-16 p-8 bg-gray-900/50 backdrop-blur-sm rounded-3xl border border-yellow-700 shadow-2xl">
-            <!-- Mutiara Kata Dinamik Ditambah -->
             <h3 class="text-sm font-bold uppercase text-gray-300 mb-3">MOTIVASI HARI INI</h3>
-            <!-- TEMA KUNING: Mutiara kata dalam Kuning -->
             <p id="mutiara-kata" class="text-xl italic font-medium text-yellow-400 transition duration-500 ease-in-out">
-                <!-- Mutiara kata akan dimuatkan di sini oleh JavaScript -->
                 Memuatkan inspirasi...
             </p>
             <hr class="border-gray-700 my-6">
@@ -212,4 +196,3 @@
     </script>
 </body>
 </html>
-
